@@ -1,0 +1,1221 @@
+<!-- 
+ 1)GETTING STARTED
+-----------------
+	METHODOLOGY
+			Byte size lesson for specific topic
+				1)Brief intro to idea
+				2)why importance
+				3)demos to reinforce
+				4)quizes & exercises to test knowledge
+				3)additional resources
+			Your responsability
+				1)follow along
+				2)experiment & change
+				3)engage in community
+				4)comment and ask questions
+				3)stay consistent
+				4)avoid skipping lessons
+				5)read deep work
+				6)mistakes are natural
+			Comparison of how web works for 
+				1)vanilla js
+				2)react
+				3)nextjs
+			Interactive lessons
+				Mental model of approach to smallest aspect of webdev
+	ENVIRONMENT
+		VS CODE
+			1)fira code font -> Fira Mono
+			2)ligatures
+			3)catpuccin theme
+			4)babel js
+				syntax highlighting
+			5)better comments
+				diff colored comments
+			6)eslint
+				highlight the erros
+			7)es7 react
+				snippets
+			8)copilot
+			9)intellicode
+				In the most recent update, IntelliCode can predict up to a whole line of code based on your current context for Python, JavaScript, and TypeScript.
+			10)material icon theme
+			11)mdx
+			12)npm intellisense
+				autocompletes path import modules
+			12)path intellisense
+				autocompletes filenames
+			13)prettier
+			14)prettier eslint
+			15)pretty typescript errors
+				parses the erros like a json extension 
+			16)tailwind css intellisense
+			17)errorlens
+				puts error messages from problems tab -> next to the line
+			18)peacock
+				color border for different vs code windows
+			19)live share
+				take control of other editor to code
+			20)tailwind fold
+				hides long classname
+			21)gitlens
+			22)git history
+
+2)INTRO & PREREQUISITES
+-----------------------
+	PREREQUISITE
+		1)JS
+			1)vars
+			2)operators
+			3)functions
+			4)arrays & methods
+			5)async - await
+			6)try - catch
+			7)ES6 arrow function
+			8)let and const
+			9)destructuring
+			10)template strings
+			11)spread and rest operators
+		2)react
+			1)components
+			2)props
+			3)state
+			4)jsx
+			5)functional components
+			6)styling
+			7)conditional rendering
+			8)mapping over lists
+			9)hooks
+			10)useState
+			11)useEffect
+		3)next
+			NONE
+	
+	STACK
+		1)nextjs 15
+		2)mongo db 
+		3)tailwind
+		4)figma
+		5)Shadcn
+		6)React Hook Form
+		7)Zod
+		8)Typescript
+
+	OBJECTIVES / TOPICS TO LEARN
+		1)setting up next.js project
+			1)exploring and comparing various setup methods
+		2)utilizing tools
+			1)eslint
+			2)prettier
+			3)git
+			4)github
+		3)integrating
+			1)tailwind
+			2)chadCN
+		4)constructing well-focused code architecture
+		5)Next.js
+			5)fundamentals
+				1)client vs server architecture
+				2)runtime vs build time
+				3)rendering strategies like SSR, ISG, SSG, CSR
+				4)thinking and approach in next.js
+			6)routing
+				1)normal routes
+				2)dynamic routes
+				3)nested routes
+				4)route groups
+				5)parallel routes
+				6)intercepting routes
+			7)authentication methods
+				1)email & pass
+				2)socials(google / github)
+			8)authorization concepts
+				1)public routes
+				2)private routes
+			9)multiple layouts
+			10)optimizing fonts
+			11)enhancing SEO
+			12)Context API within Next.js server architecture
+			13)Data fetching for all rendering strategies
+			14)Revalidation & caching
+			15)Building backend
+			16)Exploring API Routes
+			17)Server actions
+		6)Understanding different dbs
+			1)mongoDB 
+				1)aggregation pipelines
+				2)mongoose
+		7)Open AI for automated answers
+		4)Classic algorithms
+			1)for building recommendation system
+			2)global database search
+			3)badge system
+			4)reputation
+			5)interacted data listing
+		8)Tailwind
+			1)develop responsive and complex UI
+			2)light and dark theme
+			3)unique properties & utility extensions
+		9)Figma as a developer
+		10)Shadcn
+		11)React Hook Form
+		12)Zod
+		13)Typescript
+			1)types
+			2)interfaces
+			3)extends
+		14)Features
+			1)counting page views
+			2)voting system
+			3)advaned filters
+			4)specialized search mechanism filter
+			5)pagination
+			6)3rd party api integration
+			7)markdown
+	FEATURES    
+		By page if page, else stand alone feature
+		1)Home
+			1)debounced search
+			2)questions list
+			3)sorting
+			4)ask a question
+			5)pagination 
+		2)Community
+			1)users list
+			2)search
+			3)filter
+		3)Collections
+			1)question list
+		4)Find Jobs
+			1)search
+			2)filter 
+			3)job list from popular apis
+		5)Tags
+			1)tags list
+			2)search
+			3)filter
+		6)Profile
+			1)user details
+			2)edit profile
+				1)form
+			3)stats
+			4)user activity
+				1)posts
+				2)answers
+			5)top tags
+		7)ASk a question
+			1)form 
+				1)title
+				2)question markdown
+				3)tags
+		8)Auth(nextAuth)
+			1)log in 
+			2)sign up
+		9)layout
+			1)left sidebar
+			2)right sidebar
+				1)top questions
+					1)algorithm for recommendation
+				2)popular tags  
+			3)search globally
+				1)list of tag,user,question,answer that matches search
+				2)filter
+			4)theme
+				1)light
+				2)dark
+		10)question details page
+			1)question details
+			2)markup
+			3)tags
+			4)vote
+			5)save to collection
+			6)answers
+				1)vote
+				2)markdown editor
+				3)pagination
+				4)generate AI answer
+		11)tag details page
+			1)search 
+			2)questions associated to tag list
+		12)mobile
+			1)sidebar
+			2)filters
+			3)views
+
+3)INTRO TO NEXTJS
+-----------------
+	BEFORE
+		History
+			React entered scene in 2015
+			Js developed in 1995 by Brenden Eich
+		New tools
+			Why created
+				Enhance work efficiency
+				Improve Performance
+			Why development becomes more efficient with tools
+				Encourages reusability which enhances:
+					Maintainability
+					Scalability
+				Ecosystem and community
+					Abundant resources
+					Extensive Documentation
+					Reusable Code
+					Bug Fixes
+					Support
+		What React brought to the table
+			Virtual DOM(Lightweight rep of Real DOM)
+				WHY
+					Updates to DOM become more:
+						Efficient
+						Optimized
+				HOW
+					Diffing process
+						Keeps track of changes and updates only what changed 
+			Completely transformed approach to design and developing applications
+				HOW
+					Encourages to think about components & break down UI
+					State to introduce interactivity 
+					Connections between components shape application flow
+		React Limitations
+			Poor SEO
+			High Initial Page load time
+	Nextjs(Flexible React Framework)
+		WHAT
+			Full Stack Framework that encompasses client(front) and server(back) functionalities within a single application
+
+			Framework
+				Tool equipped with predefined rules and conventions that offer structured way to construct an app.
+		PROVIDES (AS A FRAMEWORK)
+			Environment that outlines
+				1)overall architecture
+				2)design patterns   
+					Proven solutions to common programming problems
+					Blueprints that help developers structure code in efficient, maintainable, reusable way.
+				3)workflows
+			Built-in solutions for common functionalities
+				1)integrating dbs
+				2)Managing routing
+				3)handling authentication
+		ALLOWS
+			More focus on implementing specific app logic rather than low level design        
+		PROVIDES(FOR FRONT END)
+			Abstraction of configuration,repetitive and time consuming tasks
+				1)Compiling
+				2)Bundling
+				3)Minifying
+				4)Formatting
+				5)Deploying
+		PROVIDES(BACK END)
+			Abstraction of back end features
+				1)configuration and setup of server
+				2)routes
+		COMPARISON WITH OTHER TOOLS
+			React and express == Next
+		BUILT IN FEATURES
+			1)server side rendering
+			2)static site generation
+			3)automatic code splitting
+		KEY BENEFITS
+			1)optimize application performance
+			2)enable faster initial page load times
+			3)improve SEO
+			4)enhance UX
+		WHY NEXT IF REACT OFFERS SSC
+			Next leverages react features MINUS extensive setup and configuration PLUS Automates many aspects allowing focus on features rather than infrastructure and boilerplate code
+		SEO WITH REACT AND NEXT
+			React
+				brief html(hinders what SEO bugs can find)
+				huge js file
+			next(static site generation / server side rendering)
+				complete html file(perfect for SEO bugs)
+				minimal js for client interaction
+			result
+				search engine crawlers access full site
+		Companies using next
+			notion
+			hulu
+			netflix
+			nike
+			hbo max
+			audible
+			ted
+			hyundai
+			porsche
+			replit
+			marvel
+			materialUI
+			coca cola
+			ferrari
+	HOW WEB WORKS(For every request:)
+		Vanilla js
+			Process
+				1)Server responds with 3 whole files(html,css,js)
+				2)Analyzes html
+				3)Applies styles
+				4)Implements interaction
+			Metrics
+				High Processing
+				High Bandwidth
+				High SEO
+				High Loadtime
+		React
+			Process
+				1)server response with minimal html with huge js that renders on client
+				2)react updates virtual dom
+				3)routing library to client navigate without full refresh
+				4)
+			Metrics
+				High Complexity
+				High Learning Curve
+				High Processing
+				Low SEO
+				High Loadtime
+		Next
+			Process
+				1)SSR & SSG sending complete html with minimal js
+	
+4)PRACTICAL CRASH COURSE
+------------------------	
+	REACT CLIENT AND SERVER COMPONENTS
+		1)React Client Components
+      Pre-rendered on server creating static shell, finishing rendering on client with hydration on the things requiring:
+        1)interactivity
+        2)browser  
+      HOW  
+        Interactivity elements are left as placeholders during PRE SERVER SIDE RENDERING. 
+      Using
+        "use client" at the top of the component file.
+      
+		2)React Server Components
+	    Rendered on the server.
+      HOW
+        Executed and resolved into HTML on the server and sent to the client to display.
+      
+			WHEN
+				Static Side Rendering
+					Build time
+				Dynamic Side Rendering
+					Request time
+			Benefit
+				1)access server side resources directly
+					1)db  
+					2)fs
+    	Effect
+				1)faster and improved performance
+      Using
+        By default, components in next.js are server components.
+    3)When to use each
+      Leave as Server Side default UNTIL we require browser interactivity and it gives us an error when trying. 
+      
+  0)PROJECT STRUCTURE [dt: 06/04/25]
+    Overiew of folder and file convention in Next.js. 
+
+    TOP-LEVEL FOLDERS
+      1)app
+          app router
+
+      2)pages
+          pages router
+      3)public
+          static assets to be served
+      4)src
+          optional application source folder
+    ROUTING FILES
+      Next offers several name reserved special files of a route segement that serve different pre defined purposes
+
+      1)layout
+      2)page
+      3)loading
+      4)not-found
+      5)error
+      6)global-error
+      7)route
+      8)template
+      9)default
+
+    COMPONENT HIERARCHY
+      Special files of a route segment are rendered in a specific hierarchy
+      
+      1)layout
+      2)template
+      3)error
+      4)loading
+      5)not-found
+      6)page
+
+    COLOCATION(default)
+      Routes are NOT publicly accesible UNTIL a page.js file is added to a route segment.
+
+      WHAT IS RETURNED TO CLIENT
+        ONLY content in page.js or route.js
+        NO other file is sent to client
+  
+    PRIVATE FOLDERS
+      Prefixing a folder with an underscore
+
+      SYNTAX
+        _folderName
+      
+      WHY
+        Files are colocated by default, private folders are NOT required for colocatio, but useful for:
+          1)separating UI logic from routing logic
+          2)consistently organizing internal files acrros a project
+          3)sorting and grouping files
+          4)avoifing potential naming conflicts
+
+      EXAMPLE 
+        dashboard(folder)
+          _components(folder)
+            button.js(file)
+          page.js(page to render for /dashboard route)
+                
+    ROUTE GROUPS
+      Indicates folder is for organizational purposes and should not be included in routes URL path
+
+      SYNTAX
+        (folderName)
+                
+      WHY 
+        Group related routes (folders / files ) together
+    
+    COMMON STRATEGIES
+      app
+        purely routing purposes
+      
+  1)ROUTING [dt: 06/04/25]
+    File system based routing, using folders and files to define routes.
+
+    1)LAYOUTS AND TEMPLATE
+      FOLDER
+        Folder name matches route segment, and will render the page.tsx inside it to that specific route segment.
+
+      PAGE(special file)
+        UI rendered on a specific route(folder name).
+            
+      ABSTRACTED
+        1)Configure browerRoute,routes,routes
+        2)Link a route to a component to show
+      
+      NESTED ROUTES
+        Just as a nested route has nested segments, this will require nested folders. 
+
+        EXAMPLE
+          /dashboard/analytics
+            /dashboard(route)
+            dashboard(folder)
+              /analytics
+                analytics(folder)
+
+      LAYOUT(special file)
+        UI shared between multiple pages.
+
+        HOW
+          Layout will auto receive a layout / page file as children, you just have to acept the children porop.
+
+        ABSTRACTS
+          1)Creating a route and nesting other routes inside it
+          2)Defining an index element to be the default for the specific route
+          3)Defining an outlet in the layout component
+
+        COMPARISON REACT VS NEXT
+          REACT
+            <BrowserRouter>
+              <Routes>
+                <Route path="/" element={<Layout />}>
+                  <Route index element={<Home />} />
+                  <Route path="about" element={<About />} />
+                </Route>
+              </Routes>
+            </BrowserRouter>
+
+            export default function Layout() {
+              return (
+                <>
+                  <header>Header</header>
+                  <Outlet />
+                  <footer>Footer</footer>
+                </>
+              );
+            }
+          NEXT
+            1)define route folder
+            2)create layout.ts file inside folder
+            3)render the children prop {children}
+        
+        ROOT LAYOUT
+          Required at the root of the /app directory,
+          Contains html and body tags.
+        
+        NESTING LAYOUTS
+          You can nest layouts by adding layout.ts inside a specific route folder.
+        
+          EXAMPLE
+            app(folder)
+              layout.ts
+                blog(folder)
+                  layout.ts
+
+    2)LINKING AND NAVIGATING
+      There exist four main ways of navigation:
+        1)<Link> Component
+          Primary way to navigate between routes in Next.js
+
+          EXAMPLE
+            import Link from 'next/link'
+  
+            export default function Page() {
+              return <Link href="/dashboard">Dashboard</Link>
+          }
+        2)useRouter() hook (Client Components)
+        3)redirect function (Server Components)
+        4)native History API
+
+    3)ERROR HANDLING
+      Divided into two categories
+        1)expected errors
+        2)uncaught exceptions
+
+      EXPECTED ERRORS
+        WHAT
+          During normal operation like
+            1)server side form validation
+            2)failed requests
+        OUTCOME
+          Handled explicitly and returned to client
+        HOW
+          useActionState() to manage state of server actions.
+        WHY
+          Avoids try / catch blocks for expected errors 
+        not really sure how this works...
+        
+      UNCAUGHT EXCEPTIONS
+        WHAT
+          Bugs or errors that should not occur during the normal flow of the app. 
+        HOW
+          Should be handled by throwing errors, WHICH should be caught by error boundaries.
+
+        ERROR BOUNDARIES
+          Catch errors in child components and display fallback UI
+
+        REQUIREMENT
+          'use client' // Error boundaries must be Client Components
+
+        TYPES
+          Different error boundaries to provide fallback UI:
+            1)common
+              root layout uncaught errors -> error.js
+            2)optional
+              ganular nested uncaught errors -> error.js
+            3)uncommon
+              root layout uncaught errors -> global-error.js
+
+        ERRORS IN NESTED ROUTES
+          Errors will bubBle up to the nearest parent error boundary.
+
+          WHY
+            allows granular control by placing error.ts at different levels of the route hierarchy.
+
+        GLOBAL ERRORS
+          Can handle errors in the root layout using global-error.ts.
+
+          REQUIREMENT
+            must define its own <html> and <body> tags, since it is replacing the root layout or template when active.
+
+        ABSTRACTS
+          Instead of writing error boundaries, retry logic, and fallback UIs by hand:
+            1)Just drop an error.tsx file where you want scoped error handling
+            2)Get built-in retry logic with reset()
+            3)Handle both client and server errors uniformly
+
+    4)LOADING UI & STREAMING
+      loading.js helps create meaningful loading UI with React Suspense.
+
+      INSTANT LOADING
+        Instant loading UI upon navigation with a loading.js inside a folder
+
+        HOW
+          Auto wraps a page.js inside a Suspense boundary
+
+          EXAMPLE
+              <Suspense fallback={<Loading/>}>
+                  <Page>
+              </Suspense>
+
+        ABSTRACTION
+          1)state to handle loading value
+          2)manually changing value of loading state
+          3)condition the loading component to appear
+          4)manual usage on every component that needs loading
+
+        BENEFIT
+          1)scoping different loading based on project structure
+
+      SUSPENSE AND STREAMING
+        tbd...
+      
+    5)REDIRECTING
+
+    6)ROUTE GROUPS
+      Route Group to prevent the folder from being included in the route's URL path. 
+
+      EXAMPLE
+          jsm.com/users -> URL
+          (dashboard) folder
+            users folder
+
+      BENEFIT        
+        Organize your route segments and project files into logical groups without affecting the URL path structure.
+      
+      CONVENTION  
+        (folderName)
+  
+    7)DYNAMIC ROUTES
+      Route where part of the URL changes based on dynamic data(segment). 
+
+      CREATING DYNAMIC SEGMENT
+        Wrapping folder name in brackets []
+
+      EXAMPLE
+        /dashboard/users/userId
+          /userId(dynamic segment)  
+          [userId](folder)
+          page.tsx(userId dynamic page)
+
+      PARAMS
+        Dynamic Segments from dynamic routes
+
+        PLACES WHERE PARAMS ARE PASSED:
+          1)layout
+          2)page
+          3)route
+          4)generateMetadata functions.
+
+        USING PARAMS TO ACCESS DYNAMIC DATA IN SERVER COMPONENTS
+          export default async function Page({params}) {
+            const { slug } = await params
+            return <div>My Post: {slug}</div>
+          }
+        TYPE
+          {params: Promise<{ slug: string }>}
+        
+        GOOD TO KNOW
+          Params = promise, must use async-await
+
+      useParams()
+        Client component hook that provides the dynamic segment from a URL.
+
+        EXAMPLE
+          'use client'
+          import { useParams } from 'next/navigation'
+          export default function ExampleClientComponent() {
+            const params = useParams()
+            console.log(params)
+            return '...'
+          }
+    8)PARALLEL ROUTES
+    9)INTERCEPTING ROUTES
+    10)ROUTE HANDLERS(Creating Traditional APIs in Next.js) [dt:08/04/25]
+      Allow to create custom request handlers for a given route with REQEUST and RESPONSE api AND extends the NEXTREQUEST AND NEXTRESPONSE apis. 
+
+      COMPARISON WITH PAGES ROUTER
+        Route handlers === API routes from pages directory / router
+        NO NEED to use Route Handlers AND API routes together
+      
+      CONVENTION
+        app -> must be inside app folder
+          api -> must be inside api folder
+            route.js/ts -> route!
+
+      EXAMPLE
+        export async function GET(request: REQUEST) {
+          return Response.json({message: "Hello from api route in backend. (No server configured)."})
+        }
+
+      REQUISITE
+        Can be placed anywhere EXCEPT a folder that has a page.js already. They come into conflict with each other. 
+        
+      ABSTRACTION
+        It is possible to create routes without:
+          1)setup server
+          2)managing server
+          3)listen server
+          4)configure middleware
+
+      BENEFIT
+        1)More logic focused less configuration focused
+
+      DYNAMIC ROUTE HANDLERS
+        Route handlers can use dynamic segments (Use data filled in at request time) to create request handlers from dynamic data. 
+
+        EXAMPLE
+          ROUTE PATH
+            app/books/[slug]/route.ts
+
+          ROUTE HANLDER
+            export async function GET(request: REQUEST, {params}:{params:Promise<{slug:string}>}) {
+              const {slug} = await params
+            }
+
+      URL QUERY PARAMETERS
+        Object passed to the route handleris  a NextRequest which extends Web Request API with additional convenience methods to easily handle query parameters.
+
+        EXAMPLE
+          import { type NextRequest } from 'next/server'
+          export function GET(request: NextRequest) {
+            const searchParams = request.nextUrl.searchParams
+            const query = searchParams.get('query')
+            // query is "hello" for /api/search?query=hello
+          }
+
+      HOW TO USE THE ROUTE HANDLERS IN THE UI 
+        Call the route from a client/server UI page.js/ts component
+
+        CONVENTION
+          app
+            books
+              page.js -> component calling the route handler defined here
+            api
+              books
+                route.js -> route handler defined here
+
+        EXAMPLE
+          async function Page(){
+            const response = await fetch("domain/api/route")
+            const books = response.json()
+
+            return (
+              <books>
+            )
+          }
+      
+    11)MIDDLEWARE
+    12)INTERNALIZARTION
+
+  2)RENDERING [dt:07/04/25]
+    Convertion of written code into UI.
+
+    REACT VS NEXT DIFFERENCE
+      REACT
+        Everything in the client
+      NEXT
+        Allows to combine client & server rendering
+
+    FUNDAMENTALS
+      1)environment
+        where application is executed
+          1)client
+            Browser in users machine that:
+              1)sends requests to server
+              2)executes response from server to display the UI.
+          2)server
+            Computer in data center that:
+              1)stores application code
+              2)receives request from a client
+              3)sends response to client
+        WHY
+          Several operations are more suited to one environment than another.\
+
+      2)request-response lifecycle
+        Initiated when user interacts with application
+
+        1)user action
+          any interaction that requires communication with the server
+        2)http request
+          client sends http request with necessary informaton about resource request
+        3)server
+          processes request and sends appropriate response
+        4)http response
+          after processing, sends appropriate response
+        5)client
+          parses resource and renders UI
+        6)user action
+          afer ui rendered,user starts an action again, looping the process.
+
+      3)network boundary
+        Conceptual line separating client and server
+
+        Behind the scenes, the work is split into
+          1)client module graph
+              all the components rendered on the client
+          2)server module graph
+              all components rendered on the server
+        HOW
+          "use client"
+          "use server"
+
+    CLIENT SIDE RENDERING
+      ....
+    
+    SERVER SIDE RENDERING
+      Write UI that can be RENDERED and CACHED on the server
+
+      HOW TO USE
+        By default, all components are server components unless otherwise specified, and server components use server side rendering
+
+      WHY RENDER ON SERVER
+        1)improve performance
+          Reducing time to complete request b/c of closeness of data source
+        1)improved Initial Load Time(ILT)
+        2)Reduced FCP(FIrst Contentful Paint
+        3)Better SEO
+          As content is already in HTML format
+        4)Logic Simplified
+          No need for client hooks
+        5)Automatic Request Deduplication
+          Reduce unnecessary API calls by analyzing identical requests and eliminating all but 1.
+        6)Improved Security
+          Protect tokens and API keys
+        7)Reduced Network Waterfall
+          Requests are more parallelized instead of waterfalled in the server.
+        
+      SERVER RENDERING STRATEGIES
+        1)Static Rendering(default) 
+          HTML pages generated at build time when deploying site NOT when user requests it.
+
+          WHEN
+            1)Static(as the name suggests) pages
+            2)unchanging not dynamic data on page
+
+          EXAMPLE
+            1)static blog post
+            2)product page
+          
+        2)Dynamic Rendering
+          HTML pages genearted for each user at request time
+
+          WHEN
+            1)Data personalized to the user
+            2)Contains information from a dynamic API
+          
+          DYNAMIC API
+            Information only known at request time and not ahead of time during pre rendering
+
+            TYPES
+              1)cookies
+              2)headers
+              3)connection
+              4)draftmode
+              5)searchparams
+              6)unstable_nostore
+
+        3)Streaming
+          Progressive rendering UI from server
+
+          SCIENCE
+            Work is split into chunks and streamed into client as it becomes ready.
+
+          WHY
+            Allows user to see part of page immediately BEFORE entire content is ready
+
+          HOW
+            loading + React Suspense(other section)
+
+        4)ISG(Incremental Static Regeneration)
+          Allows update of static content after site build
+
+          METHODS TO USE
+            1)time based revalidation
+              Revalidates entire page after a set ammount of time
+
+              HOW
+                export revalidate const with value in ms on top of the page file
+                
+              WHAT HAPPENS
+                Route segment config affecting entire page with all fetches inside
+
+              EXAMPLE
+                export const = revalidate = 3600
+
+            2)revalidate request after a set ammount of time
+              HOW
+                options parameter in fetch function with revalidate prop and value in ms
+
+              WHAT HAPPENS
+                Affects only speciic fetch
+
+              EXAMPLE
+                const data = fetch("url", {next:{revalidate:3600}})
+
+            3)On Demand Validation
+              Instead of depending on time, use revalidatePath for ondemand revalidation of content
+
+        5)Partial Pre Rendering(PPR)
+          Combines static and dynamic rendering
+
+          WHY
+            Allows to render static shell of page WHILE streaming dynamic content
+
+          HOW
+            1)on build time, generates static shell of page (every static part)
+            2)placeholders are rendered instead of dynamic content with the use of suspense wrappers
+            3)on request time, static shell served immediately
+            4)dynamic content streamed in as becomes available
+
+          TYPE OF COMPONENTS 
+            1)static
+            2)dynamic
+            3)partially static & dynamic
+
+    1)CLIENT COMPONENTS
+    2)COMPOSITION PATTERNS
+    3)PARTIAL PRERENDERING
+    4)RUNTIMES
+
+	3)SEO & METADATA [dt:08/04/25]
+    Using metadata to improve SEO
+
+    Metadata
+      Description data that provides information about the project or webapp. Not part of the actual content the user interacts with. 
+      
+      Helps (...) understand the content better
+        Browser
+          enhances user experience
+        search engines
+          like an explanation of the project
+        social platforms 
+          open graph rich previews
+
+      DEFAULT METADATA
+        Even if none of the ways is used, these always get auto generated and can be overwritten:
+          1)meta charset tag
+            <meta charset="utf-8" />
+          2)meta viewport tag
+            <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+      Ordering
+        Metadata is evaluated in order, starting from the root segment down to the segment closest to the final page.js segment. For example:
+          1)app/layout.tsx (Root Layout)
+          2)app/blog/layout.tsx (Nested Blog Layout)
+          3)app/blog/[slug]/page.tsx (Blog Page) -> evaluated last gets priority
+
+      With all the options below:
+        Next.js will automatically generate the relevant <head> tags for your page, which can be inspected in the browser's developer tools.
+
+        1)The static metadata object
+          Create and export metadata object in:
+            1)layout.ts 
+              EXAMPLE
+                export const metadata: Metadata = {
+                  title: "Hello Nextjs",
+                  description: "Generated by create next app",
+                }
+            2)page.ts
+              EXAMPLE
+                export const metadata: Metadata = {
+                  title: "About",
+                  description: "Its the about page",
+                }
+          HOW
+            Next auto detects it and turns it into meta tags
+          WHEN
+            
+        2)The dynamic generateMetadata function
+          You can use the function to fetch metadta that depends on data. For example, fetching a specific title and description for a specific blog post.
+
+          EXAMPLE
+            export async function generateMetadata({params}){
+              const {id} = params 
+              const resource = await getResourceById({id})
+
+              const title = resource.title  + " | JS Mastery"
+              const seoDescription = "Free resources database containing ebooks"
+
+              return {
+                title,
+                description: seoDescription
+                other: {...}
+              }
+            }
+      
+          REQUISITE
+            only server components
+
+          RETURNS
+            Dynamic object that gets analyzed the same way the static Metadata object does.
+
+            Memoizing data requests
+              To avoid duplicate requests, you can use React's cache function to memoize the return value and only fetch the data once. 
+
+              EXAMPLE
+                import { cache } from 'react'
+                import { db } from '@/app/lib/db'
+                
+                // getPost will be used twice, but execute only once
+                export const getPost = cache(async (slug: string) => {
+                  const res = await db.query.posts.findFirst({ where: eq(posts.slug, slug) })
+                  return res
+                })
+
+          HOW DYNAMIC
+            1)access to params from dynamic segments
+            2)Next auto detects and converts to metatags
+
+          WHERE
+            1)layout
+            2)page
+
+          WHEN
+            Dynamic data relevant to the user
+
+
+        3)File based metadata
+          WHERE
+            directly inside app folder 
+
+          HOW
+            Next auto detects files and generates meta tags 
+
+          DETAILS
+            Just about adding the files with the right names.
+
+          ABSTRACTION
+            No need to config the tags, just add the files. Next does the config for you.
+
+          TYPES OF FILES
+            1)open-graph
+              Created through the ImageResponse constructor that allows for generating dynamic images with jsx and css. 
+            2)favicon
+              Small icons that represent site in bookmarks and search results.
+            3)robots
+            4)sitemaps
+            5)icons
+
+          EXAMPLES
+            app
+              favicon.ico
+              icon.svg
+              opengraph-image.jpg
+              twitter-image.png
+
+          ORDER
+            Ranked highest among 3 types of metadata. 
+
+5)PROJECT SETUP
+	1)CREATE NEXTJS APP
+    INSTALL
+		  npx create-next-app@latest
+    TURBOPACK
+      next gen bunlder wrriten in rust
+      BENEFITS
+        Faster start up times
+        quicker updates
+        improved memory efficiency
+    DEV DEPS / NON DEV DEPS
+      Non dev deps are shipped to prod
+  FILES
+    next-env.d.ts (TypeScript Environment Declaration File)
+      Tells ts about the types that next.js offers automatically. 
+      Helper that ts uses bts to work nicely with next.js
+
+    next.config.ts (Next.js Configuration File)
+      Config how next behave. Similar to tailwind.config.ts / tsconfig.json.
+
+    eslint.config.mjs — Modern ESLint Config (Flat Config)
+      Configs eslint, telling it how to configure code. 
+
+    postcss.config.mjs — PostCSS Configuration (Modern Module Format)
+      Configs postcss, telling it how to process your CSS(tailwind, autoprefixer, nesting)
+      
+      POSTCSS
+        platform for transforming css with js plugins.
+
+    NEXT folder
+      Compiled version of app.
+
+      INSIDE
+        cache/	
+          Caches builds to speed things up
+        server/	
+          Contains server-side rendered pages
+        static/	
+          Includes optimized static files (images, JS chunks, etc.)
+          build-manifest.json	Maps routes to JS/CSS bundles
+        routes-manifest.json	
+          Info about dynamic/static routes
+        middleware-manifest.json	
+          Info about edge functions/middleware
+        app/ or pages/	
+          Transpiled and bundled page components
+        trace files	
+          For analyzing performance and tracing server code
+          
+      CAN BE DELETED
+        Yes, next creates another on build
+
+    HOT MODULE REPLACEMENT
+      Update in real time based on changes to the code, without affecting states (forms, inputs, scroll positions.)
+
+      HOW
+        1)detects changes
+        2)rebuilds only changed modules
+        3)sends updated module to browser
+        4)replaces old module on fly
+    
+    EXPORTING COMPONENTS
+      NAMED FUNCTIONS
+        can do inline default export 
+      ARROW FUNCTIONS
+        can not do inline default export 
+	2)GIT & GITHUB SETUP
+      GIT
+        version control tracking changes & collab
+      GITHUB
+        online platform for storing and sharing
+      STRATEGY
+        constanly commit and push for each individual lesson to check state of codebase 
+    
+	3)ESILNT & PRETTIER SETUP
+    
+	4)TAILWIND CSS SETUP
+	5)TAILWIND CSS THEMING
+	6)SETUP FONT
+	7)ASSETS AND METADATA
+6)NEXTJS ROUTING
+	FILE BASED
+	ADVANCED
+7)ARCHITECTURE
+	BIRTH OF SERVER COMPONENTS
+	CLIENT VS SERVER PARADIGM
+	DIFFERENT RENDERING STRATEGIES
+7)LIGHT AND DARK THEME
+	SET UP THE THEME
+	INSTALLING CHADCN UI 
+	CREATING A NAVBAR
+	CREATE A THEME TOGGLER
+8)AUTHENTICATION
+	WHAT
+	HTTP STATE MANAGEMENT MECHANISMS
+	CREATE AUTH ROUTES
+	CREATE AUTH LAYOUT & SOCIAL AUTH FORM
+	SETUP NEXTAUTH WITH GITHUB PROVIDER
+	IMPLEMENT GITHUB SIGNIN
+	IMPLEMENT GOOGLE SIGNIN
+	CREATING AUTH FORM
+9)APPLICATION NAVIGATION
+	MOBILE NAVIGATION
+	ACTIVE LESSON: LEFTSIDEBAR
+	IMPLEMENT LEFTSIDEBAR
+	IMPLEMENT RIGHT SIDEBAR
+10)STATE MANAGEMENT
+11)HOME PAGE
+12)ASK A QUESTIONS PAGE
+13)DEVELOP YOUT BACKEND
+14)ERROR & LOG HANDLERS
+15)API ROUTES(ROUTE HANDLER)
+16)AUTHENTICATION II: SOCIAL AUTH ACCOUNTS
+17)SERVER ACTIONS
+18)AUTHENTICATION III: EMAIL PASSWORD AUTH
+19)QUESTION SUBMISSION
+20)HOME PAGE
+21)TAGS PAGE 
+22)QUESTION DETAILS
+23)ANSWER SUBMISSION 
+24)AI INTEGRATION 
+25)VOTING SYSTEM
+26)COLLECTIONS PAGE
+27)COMMUNITY PAGE
+28)FILTERS AND PAGINATION 
+29)SHOW TOP RESULTS 
+30)PROFILE PAGE
+31)ADVANCED NEXTJS
+-->
