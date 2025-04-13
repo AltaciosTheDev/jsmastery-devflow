@@ -1165,8 +1165,144 @@
         constanly commit and push for each individual lesson to check state of codebase 
     
 	3)ESILNT & PRETTIER SETUP
-    
+    ESLINT PLUGIN  
+      npm module that adds new rules for specific libraries.
+      HOW
+        install plugin 
+          e.g: npm install eslint-plugin-react --save-dev
+        enable rules manually or through a config
+          e.g: {
+                "plugins": ["react"],
+                "rules": {
+                  "react/jsx-uses-react": "warn"
+                }
+              }
+      1)TAILWIND
+        eslint-plugin-tailwindcss
+          Rules enforcing best practices and consistency using Tailwind CSS.
+        
+          SUPPORTED RULES
+            1)classnames-order
+            2)enforces negative arbitrary values
+            3)enforces shorthand
+            4)no arbitrary values
+            5)no custom classnames
+            6)no contradicting classnames
+            7)no unnecessary arbitrary value
+
+          WITH ESLINT EXTENSION
+            all the rules while provide error messages
+
+          install
+            $ npm i -D eslint eslint-plugin-tailwindcss
+          
+          config file
+            eslint.config.js/mjs
+              This is the default in ESLint v9,
+
+            e.g:
+              import tailwind from "eslint-plugin-tailwindcss";
+              export default [...tailwind.configs["flat/recommended"]];
+          
+        prettier-plugin-tailwindcss
+          tbd
+      2)IMPORT
+        eslint-plugin-import
+          helps validate and manage import/export syntax in your JavaScript or TypeScript code.
+
+          install
+            npm i -D eslint-plugin-import 
+
+          ADD RULES 
+            head over to the eslint.config.mjs
+          
+        
+    ESILNT CONFIG
+      Predefined set of rules or options from a plugin
+
+      HOW
+        extend config to auto apply rule set
+          npm install eslint-config-airbnb --save-dev
+        eg: {
+            "extends": ["airbnb"]
+          }
+      eslint-config-standard
+        js style guide, linter, formatter
+
+        INCOMPATIBILITY
+          No longer compatible with eslint v9+.
+          Not worth to downgrade b/c create next app brings eslint v9+.
+        
+      eslint-config-prettier
+        This ESLint config disables formatting rules that conflict with Prettier.
+  
+        ASSUMPTION
+          It assumes you have Prettier installed in the project.
+
+        The VS Code extension:
+          It only runs in your local editor.
+
+        HOW
+          install
+            npm i -D eslint-config-prettier
+
+          config file
+            {
+              "extends": [
+                "some-other-config-you-use",
+                "prettier"
+              ]
+            }
+        
+    LEGACY DEPS
+      --legacy-peer-deps flag to install deps that are deprectaed
+
+    PRETTIER
+      install
+        npm i -D prettier
+              
 	4)TAILWIND CSS SETUP
+    DOWNGRADING TO V3
+      1)Uninstall Tailwind v4
+        npm uninstall tailwindcss @tailwindcss/postcss @tailwindcss/node
+      2.1)Install Tailwind CSS v3.4
+        npm install -D tailwindcss@3.4.1 postcss autoprefixer
+      2.2)Then reinit Tailwind if needed:
+        npx tailwindcss init -p
+      3)Adjust Tailwind Config Files  
+        module.exports = {
+          plugins: {
+            tailwindcss: {},
+            autoprefixer: {},
+          },
+        };
+      4)Test Tailwind CSS in the App
+        @tailwind base;
+        @tailwind components; 
+        @tailwind utilities;
+      
+  5)Settings.json 
+    To fix (eslint action) on save
+      "editor.codeActionsOnSave": {
+        "source.fixAll.eslint": "explicit" 
+      }
+    Format on save (prettier)
+      "editor.formatOnSave": true
+
+  TLDR
+    eslint
+      Base ESLint engine. Required.
+    prettier
+      The actual Prettier formatter. Needed if you want formatting.
+    eslint-config-prettier
+      Yes	Turns off ESLint rules that might conflict with Prettier.
+    eslint-plugin-prettier
+      Optional	Runs Prettier as an ESLint rule (so formatting errors show in ESLint).
+    eslint-plugin-tailwindcss
+      Optional	Helps with Tailwind class sorting/order.
+    eslint-config-next
+      Yes (for Next)	Next.js ruleset. Includes core rules + React/TypeScript setup.
+  
 	5)TAILWIND CSS THEMING
 	6)SETUP FONT
 	7)ASSETS AND METADATA
