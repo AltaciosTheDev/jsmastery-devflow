@@ -1090,7 +1090,7 @@
           ORDER
             Ranked highest among 3 types of metadata. 
 
-5)PROJECT SETUP
+5)PROJECT SETUP [dt: 11:04/25]
 	1)CREATE NEXTJS APP
     INSTALL
 		  npx create-next-app@latest
@@ -1164,8 +1164,8 @@
       STRATEGY
         constanly commit and push for each individual lesson to check state of codebase 
     
-	3)ESILNT & PRETTIER SETUP
-    ESLINT PLUGIN  
+	3)ESILNT & PRETTIER SETUP [dt:12/04/25]
+    1)ESLINT PLUGIN  
       npm module that adds new rules for specific libraries.
       HOW
         install plugin 
@@ -1206,6 +1206,7 @@
           
         prettier-plugin-tailwindcss
           tbd
+
       2)IMPORT
         eslint-plugin-import
           helps validate and manage import/export syntax in your JavaScript or TypeScript code.
@@ -1217,7 +1218,7 @@
             head over to the eslint.config.mjs
           
         
-    ESILNT CONFIG
+    2)ESILNT CONFIG
       Predefined set of rules or options from a plugin
 
       HOW
@@ -1254,15 +1255,37 @@
               ]
             }
         
-    LEGACY DEPS
+    3)LEGACY DEPS
       --legacy-peer-deps flag to install deps that are deprectaed
 
-    PRETTIER
+    4)PRETTIER
       install
         npm i -D prettier
+
+    5)Settings.json 
+      To fix (eslint action) on save
+        "editor.codeActionsOnSave": {
+          "source.fixAll.eslint": "explicit" 
+        }
+      Format on save (prettier)
+        "editor.formatOnSave": true
+
+    6)TLDR
+      eslint
+        Base ESLint engine. Required.
+      prettier
+        The actual Prettier formatter. Needed if you want formatting.
+      eslint-config-prettier
+        Yes	Turns off ESLint rules that might conflict with Prettier.
+      eslint-plugin-prettier
+        Optional	Runs Prettier as an ESLint rule (so formatting errors show in ESLint).
+      eslint-plugin-tailwindcss
+        Optional	Helps with Tailwind class sorting/order.
+      eslint-config-next
+        Yes (for Next)	Next.js ruleset. Includes core rules + React/TypeScript setup.
               
-	4)TAILWIND CSS SETUP
-    DOWNGRADING TO V3
+	4)TAILWIND CSS SETUP [dt:13/04/25]
+    1)DOWNGRADING TO V3
       1)Uninstall Tailwind v4
         npm uninstall tailwindcss @tailwindcss/postcss @tailwindcss/node
       2.1)Install Tailwind CSS v3.4
@@ -1280,31 +1303,102 @@
         @tailwind base;
         @tailwind components; 
         @tailwind utilities;
-      
-  5)Settings.json 
-    To fix (eslint action) on save
-      "editor.codeActionsOnSave": {
-        "source.fixAll.eslint": "explicit" 
-      }
-    Format on save (prettier)
-      "editor.formatOnSave": true
-
-  TLDR
-    eslint
-      Base ESLint engine. Required.
-    prettier
-      The actual Prettier formatter. Needed if you want formatting.
-    eslint-config-prettier
-      Yes	Turns off ESLint rules that might conflict with Prettier.
-    eslint-plugin-prettier
-      Optional	Runs Prettier as an ESLint rule (so formatting errors show in ESLint).
-    eslint-plugin-tailwindcss
-      Optional	Helps with Tailwind class sorting/order.
-    eslint-config-next
-      Yes (for Next)	Next.js ruleset. Includes core rules + React/TypeScript setup.
   
-	5)TAILWIND CSS THEMING
-	6)SETUP FONT
+    2)Tailwind.config.js setup
+      WHY
+        If not, detailed ocnfig will require too much repetition and poor effectivity.
+      SOLUTION
+        Modify configurations in the tailwind.config.ts file to reuse
+      extend color
+        Adds new colors and allows them to be used besides the ones that already exist
+
+        e.g: 
+          theme:{
+            extend:{
+              colors: {
+                light: {
+                  900: "#FFFFFF"
+                }
+              }
+            }
+          }
+      CUSTOMARY ITEMS TO CUSTOMIZE
+        1)color
+        2)spacing
+        3)borderRadius
+        4)boxshadow
+        5)screen sizes
+      
+      
+    
+  5)TAILWIND CSS THEMING [dt:13/04/25]
+    1)Layers
+      Tailwind uses the layers to apply styles in a specific order.
+
+        1)base
+          Use this to define or override base-level styles, like HTML tags.
+
+          example
+            @layer base {
+              h1 {
+                @apply text-3xl font-bold;
+              }
+
+              body {
+                @apply bg-light-900 text-dark-200;
+              }
+            }
+          when
+            typography
+            default spacing
+            global reset
+        2)components
+          Use this to define reusable classes with multiple utility classes.
+
+          example
+            @layer components {
+              .btn {
+                @apply px-4 py-2 bg-primary-500 text-white rounded;
+              }
+
+              .card {
+                @apply shadow-md p-6 rounded-lg bg-white;
+              }
+            }
+          when
+            custom ui blocks
+        3)utilities
+          Use this when you want to add new utilities or override existing ones.
+          
+          example
+            @layer utilities {
+            .content-auto {
+              content-visibility: auto;
+            }
+
+            .text-shadow {
+              text-shadow: 2px 2px #000000;
+            }
+          }
+          
+          when
+            Ideal for one-liner utility styles you want available as classes like text-shadow.
+    2)Pugins
+      1)@tailwindcss/typography
+        Provides set of pre styled classes for rich text content like blog posts, articles, markdown.
+
+        install
+          npm install -D @tailwindcss/typography
+        
+
+      2)tailwindcss-animate
+        Ready to use animation utility classes powered by motion.dev
+        Saves the work of defining keyframes manually
+
+        install
+          npm install -D tailwindcss-animate
+    
+  6)SETUP FONT
 	7)ASSETS AND METADATA
 6)NEXTJS ROUTING
 	FILE BASED
