@@ -374,7 +374,7 @@
 			Process
 				1)SSR & SSG sending complete html with minimal js
 	
-4)PRACTICAL CRASH COURSE
+4)MY OWN NEXTJS DOCS SUMMARY
 ------------------------	
 	REACT CLIENT AND SERVER COMPONENTS
 		1)React Client Components
@@ -1007,8 +1007,7 @@
                 }
           HOW
             Next auto detects it and turns it into meta tags
-          WHEN
-            
+    
         2)The dynamic generateMetadata function
           You can use the function to fetch metadta that depends on data. For example, fetching a specific title and description for a specific blog post.
 
@@ -1057,7 +1056,6 @@
           WHEN
             Dynamic data relevant to the user
 
-
         3)File based metadata
           WHERE
             directly inside app folder 
@@ -1076,6 +1074,9 @@
               Created through the ImageResponse constructor that allows for generating dynamic images with jsx and css. 
             2)favicon
               Small icons that represent site in bookmarks and search results.
+
+              WHERE
+                root
             3)robots
             4)sitemaps
             5)icons
@@ -1090,6 +1091,246 @@
           ORDER
             Ranked highest among 3 types of metadata. 
 
+  4)IMAGES AND FONTS [dt: 14/04/25]
+    Next comes with auto image and font optimization.
+
+    1)The Next.js <Image> component
+      extends the HTML <img> element to provide:
+        1)size optimization
+          auto serves correctly sized images 
+        2)visual stability
+          prevents layout shift when images are loading
+        3)faster page loads
+          only load images when they enter the viewport with lazy loading
+        4)asset flexibility
+          resize images on demand
+
+      usage example
+        import Image from 'next/image'
+ 
+        export default function Page() {
+          return <Image src="" alt="" />
+        }
+      
+      src property can be:
+        1)local
+        2)remote
+
+      1)local images
+        static images stored in the public folder 
+
+        example
+          import profilePic from './me.png'
+          src={profilePic}
+        
+        props
+          width, height, blurDataURL
+            1)based on the imported photo determines width and height
+            2)determines the image ratio and prevents CLS(cummulative layout shift)
+          
+      2)remote images
+        provide a URL string for the source property 
+
+        example
+          src="https://s3.amazonaws.com/my-bucket/profile.png"
+
+        props
+          need to provide width, height, blurDataURL, next does not have access to remote files
+        
+        Requirement
+          provide permission to next in the next.config.js to safely allow images from a server, a url list is needed.
+
+          example
+            const config: NextConfig = {
+              images: {
+                remotePatterns: [
+                  {
+                    protocol: 'https',
+                    hostname: 's3.amazonaws.com',
+                    port: '',
+                    pathname: '/my-bucket/**',
+                    search: '',
+                  },
+                ],
+              },
+            }
+        
+    2)OPTIMIZING FONTS
+      MODULE
+        next/font
+
+      BENEFIT
+        1)auto optimizes font
+        2)removes external network request improving privacy
+        3)built in self hosting for any font file
+
+      GOOGLE FONT
+        You can auto self host any google font
+
+        HOW TO USE
+          1)Import from next/font/google
+          2)call as a function with approprite options
+          3)set the classname of the element to apply to
+
+        HOW IT WORKS
+          1)Fonts are fetched and hosted locally during build time.
+          2)They’re not loaded from Google Fonts CDN at runtime.
+          3)Next.js downloads the font files and serves them just like local fonts.
+          4)Like next/font/local, it handles preloading, subsetting, and optimizing automatically.
+
+        PROS
+          1)Same performance/privacy benefits as local fonts.
+          2)No need to manually download and convert fonts.
+
+        FONT WEIGHT
+          VARIABLE FONT
+            no need to specify font weight
+          
+          NON VARIABLE FONT
+            singular
+              weight: '400',
+
+            multiple weights
+              const roboto = Roboto({
+                weight: ['400', '700'],
+                style: ['normal', 'italic'],
+                subsets: ['latin'],
+                display: 'swap',
+              })  
+              
+        NAME SYNTAX
+          Use an underscore (_) for font names with multiple words. E.g. Roboto Mono should be imported as Roboto_Mono.
+
+        SPECIFYING A SUBSET
+          Google fonts are auto subsetted, you'll need to specify which subset you need.
+          
+          WHAT IS A SUBSET
+            The practice of creating a “subset” of a font—a file that contains a custom (and usually limited) collection of glyphs.
+
+          SYNTAX
+            const inter = Inter({ subsets: ['latin'] })
+
+        EXAMPLE
+          import { Geist } from 'next/font/google'
+ 
+          const geist = Geist({
+            weight: '400'
+            subsets: ['latin'],
+          })
+          
+          export default function Layout({ children }: { children: React.ReactNode }) {
+            return (
+              <html lang="en" className={geist.className}>
+                <body>{children}</body>
+              </html>
+            )
+          }
+
+        HOW TO USE 
+          1)FUNCTION 
+            The first approach is to create a utility function that exports a font, imports it, and applies its className where needed. 
+
+            STEPS
+              1)add font file in /fonts folder
+              2)import font in layout.ts
+                import Applied globally
+              3)import font in page.ts
+                import Applied where needed
+
+          2)CSS VARIABLE
+            CSS VARIABLE HISTORY
+              1)Declaring a variable with scope
+                :root {                     -> makes it global(variable scope) pt 1
+                  --primary-color: #3498db; -> variable name : variable value  pt 2
+                  --font-size-base: 16px;
+                }
+              
+              2)Using a variable where needed 
+                body {
+                  color: var(--primary-color);
+                  font-size: var(--font-size-base); -> is using it somewhere pt3
+                }
+            USING CSS VARIABLES IN NEXTJS
+              1)The Css Way
+                1)create variable property in the function of the font
+                  const inter = localfont({     
+                    src: './fonts/InterVF.ttf',
+                    variable: "--font-inter", -> this defines the variable like pt2 of normal css variables
+                  })
+
+                  SCOPE
+                    where this font variable is created, determines where it can be used. 
+
+                    Layout
+                      everywhere
+                    Page
+                      specific
+
+                2)use in the html tag
+                  <body                       -> this defines the scope like pt1 of normal css variables
+                    className={`${inter.variable} antialiased`} 
+                  >
+                3)use anywhere in the css (globall.css) file
+                  body{
+                    font-family: var(--font-inter); -> same usage as in the normal css pt 3
+                  }
+                
+
+              2)The tailwind way
+                1)same
+                2)same
+                3)add to tailwind config to use and have intellisense pop it up 
+                  fontFamily: {
+                    inter: ["var(--font-inter)"],
+                  }
+                4)use anywhere via tailwind classes:
+                  <h1 className="text-3xl text-red-400 font-inter">Home Page</h1>
+        
+      LOCAL FONT
+        HOW TO USE 
+          1)import from next/font/local
+          2)specify source of font file
+
+        INSIDE OF THE WORKING
+          1)The font file is imported at build time.
+          2)Next.js moves it to the .next/static/media folder.
+          3)It's served locally via your domain (e.g., /_next/static/media/my-font.woff2), reducing reliance on third parties like Google Fonts.
+          4)It's optimized and preloaded automatically via the <link rel="preload"> tag.
+
+        PRO
+          1)Faster performance (no third-party request).
+          2)Privacy-friendly (no tracking from Google Fonts).
+          3)Automatic font subsetting and optimization.
+        
+        EXAMPLE
+          import localFont from 'next/font/local'
+ 
+          const myFont = localFont({
+            src: './my-font.woff2',
+          })
+          
+          export default function RootLayout({
+            children,
+          }: {
+            children: React.ReactNode
+          }) {
+            return (
+              <html lang="en" className={myFont.className}>
+                <body>{children}</body>
+              </html>
+            )
+          }
+        
+        MULTIPLE FILES FOR SINGLE FONT FAMILY
+          src will be an array
+            src: [
+              {
+                path:
+                weight:
+                style
+              }
+            ]
+        
 5)PROJECT SETUP [dt: 11:04/25]
 	1)CREATE NEXTJS APP
     INSTALL
@@ -1165,150 +1406,193 @@
         constanly commit and push for each individual lesson to check state of codebase 
     
 	3)ESILNT & PRETTIER SETUP [dt:12/04/25]
-    1)ESLINT PLUGIN  
+    0)FILE CONVENTION
+      PREVIOUS(Eslint v8-)
+        .json
+      NEWER (eslint v9+)
+        .js / .mjs
+
+        .MJS
+          Module javascript, indicates the file uses ES Modules(ESM) and is compatible with features like "import" / "export"
+
+    1)PLUGINS
       npm module that adds new rules for specific libraries.
-      HOW
-        install plugin 
+
+      HOW(GENERIC)
+        1)install plugin 
           e.g: npm install eslint-plugin-react --save-dev
-        enable rules manually or through a config
+        2)enable rules manually or through a config
           e.g: {
                 "plugins": ["react"],
                 "rules": {
                   "react/jsx-uses-react": "warn"
                 }
               }
+
       1)TAILWIND
         eslint-plugin-tailwindcss
           Rules enforcing best practices and consistency using Tailwind CSS.
         
-          SUPPORTED RULES
-            1)classnames-order
-            2)enforces negative arbitrary values
-            3)enforces shorthand
-            4)no arbitrary values
-            5)no custom classnames
-            6)no contradicting classnames
-            7)no unnecessary arbitrary value
+        SUPPORTED RULES
+          1)classnames-order
+          2)enforces negative arbitrary values
+          3)enforces shorthand
+          4)no arbitrary values
+          5)no custom classnames
+          6)no contradicting classnames
+          7)no unnecessary arbitrary value
 
-          WITH ESLINT EXTENSION
-            all the rules while provide error messages
+        WITH ESLINT EXTENSION
+          all the rules will provide error messages in UI
 
-          install
+        SET UP
+          1)install
             $ npm i -D eslint eslint-plugin-tailwindcss
-          
-          config file
-            eslint.config.js/mjs
-              This is the default in ESLint v9,
-
-            e.g:
-              import tailwind from "eslint-plugin-tailwindcss";
-              export default [...tailwind.configs["flat/recommended"]];
-          
-        prettier-plugin-tailwindcss
-          tbd
+        
+          2)config file(.js, .mjs)
+            const eslintConfig = [
+            ...compat.extends(
+              "plugin:tailwindcss/recommended", -> imports as plugin + uses recommended settings(as config)
+            ),
+              
+        OPTION WITH PRETTIER
+          prettier-plugin-tailwindcss
+            not necessary right now, it is only for prettier to format tailwindcss accordingly, but with the eslint-plugin-tailwindcss, eslint does it. 
 
       2)IMPORT
         eslint-plugin-import
           helps validate and manage import/export syntax in your JavaScript or TypeScript code.
 
-          install
+        SET UP
+          1)install
             npm i -D eslint-plugin-import 
 
-          ADD RULES 
-            head over to the eslint.config.mjs
-          
+          2)add as config in config file
+            const eslintConfig = [
+            ...compat.plugins("import"),
+            ),
+          3)add rules(needed when using configs)
+            rules: {
+              "import/order": [
+                ...
+              ],
+            },
         
-    2)ESILNT CONFIG
-      Predefined set of rules or options from a plugin
+    2)CONFIGS
+      Predefined set of rules or options from a plugin(more like conventions applied by others to be used, not like something extra for a module)
 
-      HOW
-        extend config to auto apply rule set
-          npm install eslint-config-airbnb --save-dev
-        eg: {
-            "extends": ["airbnb"]
-          }
-      eslint-config-standard
+      1)eslint-config-standard
         js style guide, linter, formatter
 
         INCOMPATIBILITY
           No longer compatible with eslint v9+.
           Not worth to downgrade b/c create next app brings eslint v9+.
         
-      eslint-config-prettier
-        This ESLint config disables formatting rules that conflict with Prettier.
+      2)eslint-config-prettier
+        This ESLint config disables formatting rules from eslint that conflict with Prettier and lets prettier handle all formatting.
+        Esling focuses on linting errors.
   
         ASSUMPTION
           It assumes you have Prettier installed in the project.
 
+        REQUIREMENT
+          install prettier if not installed
+            npm i -D prettier
+
         The VS Code extension:
           It only runs in your local editor.
 
-        HOW
-          install
+        SET UP
+          1)install
             npm i -D eslint-config-prettier
 
-          config file
-            {
-              "extends": [
-                "some-other-config-you-use",
-                "prettier"
-              ]
-            }
+          2)config file: add in the extends section
+            const eslintConfig = [
+            ...compat.plugins("import"),
+            ...compat.extends(
+              "prettier"
+            )
         
     3)LEGACY DEPS
-      --legacy-peer-deps flag to install deps that are deprectaed
+      flag to install deps that are deprectaed
+        --legacy-peer-deps(not needed if downgraded tailwind v4-v3)
 
-    4)PRETTIER
-      install
-        npm i -D prettier
-
-    5)Settings.json 
-      To fix (eslint action) on save
+    4)Settings.json 
         "editor.codeActionsOnSave": {
-          "source.fixAll.eslint": "explicit" 
+          "source.fixAll.eslint": "explicit",     -> fixes errors found by eslint whenever you save the file(will also fix the tailwind classes b/c of this)
+          "source.addMissingImports": "explicit"  -> adds missing imports from the eslint-plugin-import when saving the file
         }
       Format on save (prettier)
-        "editor.formatOnSave": true
+        "editor.formatOnSave": true               -> commands formats with prettier when saving files 
 
-    6)TLDR
-      eslint
-        Base ESLint engine. Required.
-      prettier
-        The actual Prettier formatter. Needed if you want formatting.
-      eslint-config-prettier
-        Yes	Turns off ESLint rules that might conflict with Prettier.
-      eslint-plugin-prettier
-        Optional	Runs Prettier as an ESLint rule (so formatting errors show in ESLint).
-      eslint-plugin-tailwindcss
-        Optional	Helps with Tailwind class sorting/order.
-      eslint-config-next
-        Yes (for Next)	Next.js ruleset. Includes core rules + React/TypeScript setup.
-              
 	4)TAILWIND CSS SETUP [dt:13/04/25]
     1)DOWNGRADING TO V3
       1)Uninstall Tailwind v4
         npm uninstall tailwindcss @tailwindcss/postcss @tailwindcss/node
+
       2.1)Install Tailwind CSS v3.4
         npm install -D tailwindcss@3.4.1 postcss autoprefixer
-      2.2)Then reinit Tailwind if needed:
-        npx tailwindcss init -p
-      3)Adjust Tailwind Config Files  
+
+      2.2)Then reinit Tailwind(this creates tailwind config file)
+        npx tailwindcss init -p 
+
+      3)Adjust Tailwind Config File(tells tailwind where to scan for tailwind classes)
         module.exports = {
-          plugins: {
-            tailwindcss: {},
-            autoprefixer: {},
+          content: [
+            "./app/**/*.{js,ts,jsx,tsx,mdx}",          
+            "./pages/**/*.{js,ts,jsx,tsx,mdx}",
+            "./components/**/*.{js,ts,jsx,tsx,mdx}",
+        
+            // Or if using `src` directory:
+            "./src/**/*.{js,ts,jsx,tsx,mdx}",
+          ],
+          theme: {
+            extend: {},
           },
+          plugins: [],
         };
-      4)Test Tailwind CSS in the App
+      4)Add tailwind directives at top of CSS file(tells tailwind what to import to your project)
         @tailwind base;
         @tailwind components; 
         @tailwind utilities;
-  
-    2)Tailwind.config.js setup
+
+    2)PostCSS & Autoprefixer
+      PostCSS
+        Transforms CSS with plugins
+                    
+        config
+          "Hey, when you're building CSS, first run Tailwind, then Autoprefixer."
+
+          module.exports = {
+            plugins: {
+              tailwindcss: {}, 
+              autoprefixer: {},
+            },
+          };
+
+        NOT USED
+          tailwind can't be used
+
+        
+      Autoprefixer
+        Autoprefixer adds vendor prefixes to your CSS automatically, so you don’t have to write things like:
+
+        -webkit-transform: ...;
+        -ms-transform: ...;
+        transform: ...;
+
+        And ensures browser compatibility
+
+        NOT USED
+          css might break in older browser
+
+    3)Tailwind.config.js setup
       WHY
-        If not, detailed ocnfig will require too much repetition and poor effectivity.
+        If not, detailed config will require too much repetition and poor effectivity.
+
       SOLUTION
         Modify configurations in the tailwind.config.ts file to reuse
+
       extend color
         Adds new colors and allows them to be used besides the ones that already exist
 
@@ -1329,8 +1613,6 @@
         4)boxshadow
         5)screen sizes
       
-      
-    
   5)TAILWIND CSS THEMING [dt:13/04/25]
     1)Layers
       Tailwind uses the layers to apply styles in a specific order.
@@ -1387,19 +1669,87 @@
       1)@tailwindcss/typography
         Provides set of pre styled classes for rich text content like blog posts, articles, markdown.
 
-        install
-          npm install -D @tailwindcss/typography
-        
-
       2)tailwindcss-animate
         Ready to use animation utility classes powered by motion.dev
         Saves the work of defining keyframes manually
 
-        install
+      3)SETUP
+        1)install
+          npm install -D @tailwindcss/typography
           npm install -D tailwindcss-animate
-    
-  6)SETUP FONT
+        2)import in tailwind config
+          import typography from "@tailwindcss/typography";
+          import animate from "tailwindcss-animate";
+        3)add as plugins
+          plugins: [animate, typography]
+
+  6)SETUP LOCAL FONT
+    Process used for inter & space-grotesk
+      1)move file to /font folder
+        interVF.ttf
+
+      2)import localfont from nextjs
+        import localfont from "next/font/local"
+
+      3)create inter localfont object with a custom var as prop
+        const inter = localfont({
+          src: './fonts/InterVF.ttf',
+          variable: "--font-inter",
+          weight: "100 200 300 400 500 600 700 800 900"
+        })
+
+      4)define global scope availability for variable(css root declaration for variable)
+        <body
+          className={`${inter.variable} antialiased`}
+        >
+          {children}
+        </body>
+
+      5)use variable in the global.css file
+        This will apply it to wherever you choose
+        body{
+          font-family: var(--font-inter);
+        }
+
+      6)add to the tailwind config file
+        This will allow intellisense to pick it up, suggest it and for you to use wherever needed
+
+        fontFamily: {
+          inter: ["var(--font-inter)"],
+        }
+    Difference of how to use inter & space-grotesk
+      Inter
+        HOW
+          inter.className
+        WHY
+          applies classname for the entire body, meaning it will be applied everywhere. No extra config needed.
+
+        WHAT HAPPENS
+          .inter-font {
+            font-family: 'Inter Variable', sans-serif;
+          }
+          <body className="inter-font"
+
+      Space Grotesk 
+        HOW
+          inter.variable
+        WHY
+          allows the variable to be available everywhere for use
+        WHAT HAPPENS
+          :root {                     -> makes it global(variable scope) pt 1
+            --font-space-grotesk;     -> variable name : variable value  pt 2
+          }
+        HOW TO USE
+          either in css with a selector or tailwind via the tailwind class
+
 	7)ASSETS AND METADATA
+    All static assets from the figma need to be imported to the project repository
+      1)images
+      2)logos
+      3)icons
+    
+    
+      
 6)NEXTJS ROUTING
 	FILE BASED
 	ADVANCED

@@ -21,11 +21,6 @@ const eslintConfig = [
   ),
   // 👇 Add custom rules as a new object here
   {
-    // settings: {
-    //   tailwindcss: {
-    //     config:"tailwind.config.mjs",
-    //   },
-    // },
     rules: {
       "import/order": [
         "error",
@@ -53,7 +48,6 @@ const eslintConfig = [
           },
         },
       ],
-      //'tailwindcss/no-custom-classname': 'error', // Turns off checking unknown class names
     },
   },
 ];
