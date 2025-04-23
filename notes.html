@@ -363,7 +363,6 @@
 				1)server response with minimal html with huge js that renders on client
 				2)react updates virtual dom
 				3)routing library to client navigate without full refresh
-				4)
 			Metrics
 				High Complexity
 				High Learning Curve
@@ -374,40 +373,9 @@
 			Process
 				1)SSR & SSG sending complete html with minimal js
 	
-4)MY OWN NEXTJS DOCS SUMMARY
+4)NEXTJS DOCUMENTATION SUMMARY 
 ------------------------	
-	REACT CLIENT AND SERVER COMPONENTS
-		1)React Client Components
-      Pre-rendered on server creating static shell, finishing rendering on client with hydration on the things requiring:
-        1)interactivity
-        2)browser  
-      HOW  
-        Interactivity elements are left as placeholders during PRE SERVER SIDE RENDERING. 
-      Using
-        "use client" at the top of the component file.
-      
-		2)React Server Components
-	    Rendered on the server.
-      HOW
-        Executed and resolved into HTML on the server and sent to the client to display.
-      
-			WHEN
-				Static Side Rendering
-					Build time
-				Dynamic Side Rendering
-					Request time
-			Benefit
-				1)access server side resources directly
-					1)db  
-					2)fs
-    	Effect
-				1)faster and improved performance
-      Using
-        By default, components in next.js are server components.
-    3)When to use each
-      Leave as Server Side default UNTIL we require browser interactivity and it gives us an error when trying. 
-      
-  0)PROJECT STRUCTURE [dt: 06/04/25]
+	0)PROJECT STRUCTURE [dt: 06/04/25]
     Overiew of folder and file convention in Next.js. 
 
     TOP-LEVEL FOLDERS
@@ -482,83 +450,48 @@
       app
         purely routing purposes
       
-  1)ROUTING [dt: 06/04/25]
+  1)ROUTING [19/04/25]
     File system based routing, using folders and files to define routes.
 
-    1)LAYOUTS AND TEMPLATE
+    1)REGULAR ROUTES
       FOLDER
         Folder name matches route segment, and will render the page.tsx inside it to that specific route segment.
 
       PAGE(special file)
         UI rendered on a specific route(folder name).
             
-      ABSTRACTED
-        1)Configure browerRoute,routes,routes
-        2)Link a route to a component to show
-      
-      NESTED ROUTES
-        Just as a nested route has nested segments, this will require nested folders. 
+      ABSTRACTS(in routing)
+        1)Configure browerRoute,routes,route
+        2)Provide URL path that will link to a component for rendering
+        3)Encapsulates the routing in the file system and removes it from the layout file
+        4)No need to download 3rd party package
 
-        EXAMPLE
-          /dashboard/analytics
-            /dashboard(route)
-            dashboard(folder)
-              /analytics
-                analytics(folder)
+      IN REACT
+        import {BrowserRouter, Route, Routes, Link} from 'react-router-dom'
 
-      LAYOUT(special file)
-        UI shared between multiple pages.
+        <Router>
+          <Routes>
+          <Route path="/" element={<Home/>}></Route
+          <Route path="/about" element={<About/>}></Route
+          <Route path="/contact" element={<Contact/>}></Route
+          </Routes>
+        </Router>
 
-        HOW
-          Layout will auto receive a layout / page file as children, you just have to acept the children porop.
+      IN NEXT
+        about(folder)   -> /about route
+            page.tsx    -> about component
+        contact(folder) -> /contact route
+            page.tsx    -> contact component
+        /root directory -> base url
+          page.tsx      -> base component
 
-        ABSTRACTS
-          1)Creating a route and nesting other routes inside it
-          2)Defining an index element to be the default for the specific route
-          3)Defining an outlet in the layout component
-
-        COMPARISON REACT VS NEXT
-          REACT
-            <BrowserRouter>
-              <Routes>
-                <Route path="/" element={<Layout />}>
-                  <Route index element={<Home />} />
-                  <Route path="about" element={<About />} />
-                </Route>
-              </Routes>
-            </BrowserRouter>
-
-            export default function Layout() {
-              return (
-                <>
-                  <header>Header</header>
-                  <Outlet />
-                  <footer>Footer</footer>
-                </>
-              );
-            }
-          NEXT
-            1)define route folder
-            2)create layout.ts file inside folder
-            3)render the children prop {children}
-        
-        ROOT LAYOUT
-          Required at the root of the /app directory,
-          Contains html and body tags.
-        
-        NESTING LAYOUTS
-          You can nest layouts by adding layout.ts inside a specific route folder.
-        
-          EXAMPLE
-            app(folder)
-              layout.ts
-                blog(folder)
-                  layout.ts
-
-    2)LINKING AND NAVIGATING
+    2)LINKING AND NAVIGATING[19/04/25]
       There exist four main ways of navigation:
         1)<Link> Component
           Primary way to navigate between routes in Next.js
+
+          WHERE
+            server components only
 
           EXAMPLE
             import Link from 'next/link'
@@ -566,10 +499,148 @@
             export default function Page() {
               return <Link href="/dashboard">Dashboard</Link>
           }
-        2)useRouter() hook (Client Components)
-        3)redirect function (Server Components)
-        4)native History API
+        2)useRouter() hook
+          WHERE
+            client components only
+        3)redirect function
+          WHERE
+            Server Components only
+          
+    3)NESTED ROUTES[19/04/25]
+      Just as a nested route has nested segments route segments, the file system will require nested folders. 
 
+      EXAMPLE
+        projects (folder) -> /projects route
+          page.tsx        -> projects component
+          list(folder)    -> /projects/list route
+            page.tsx      -> projets-list component
+        /root directory   -> base url
+          page.tsx        -> base component
+
+    4)LAYOUT(special file)[19/04/25]
+      UI shared between multiple pages.
+
+      HOW
+        Layout will auto receive a layout / page file as children, you just have to acCept the children prop.
+
+      ABSTRACTS(in layout)
+        1)Creating a route and nesting other routes inside it
+        2)Defining an index element to be the default for the specific route
+        3)Defining an outlet in the layout component
+
+      COMPARISON REACT VS NEXT
+        REACT
+          <BrowserRouter>
+            <Routes>
+              <Route path="/" element={<Layout />}>
+                <Route index element={<Home />} />
+                <Route path="about" element={<About />} />
+              </Route>
+            </Routes>
+          </BrowserRouter>
+
+          export default function Layout() {
+            return (
+              <>
+                <header>Header</header>
+                <Outlet />
+                <footer>Footer</footer>
+              </>
+            );
+          }
+        NEXT
+          1)define route folder
+          2)create layout.ts file inside folder
+          3)render the children prop {children}
+      
+      PROJECT LAYOUT
+        Required at the root of the /app directory,
+        Contains html and body tags.
+      
+      NESTING LAYOUTS
+        You can nest layouts by adding layout.ts inside a specific route folder.
+      
+        EXAMPLE
+          app(folder)
+            layout.ts
+              blog(folder)
+                layout.ts
+
+    5)DYNAMIC ROUTES[19/04/25]
+      Route where part of the URL changes based on dynamic data(segment). 
+
+      CREATING DYNAMIC SEGMENT
+        Wrapping folder name in brackets []
+
+        EXAMPLE
+          dashboard(folder)    -> /dashboard route
+            page.tsx           -> dashboard component
+            users(folder)      -> /dashboard/users route
+              page/tsx         -> dashboard-users component
+              [userId](folder) -> dashboard/users/userId route
+                page.tsx       -> dashboard-users-user component
+          root folder          -> directory
+            page.tsx           -> root component
+
+      PARAMS
+        Dynamic Segments from dynamic routes
+
+        PLACES WHERE PARAMS ARE PASSED:
+          1)layout
+          2)page
+          3)route
+          4)generateMetadata functions.
+
+        USING PARAMS TO ACCESS DYNAMIC DATA
+          WHERE
+            Only server components
+
+          EXAMPLE
+            export default async function Page({params}) {
+              const { slug } = await params
+              return <div>My Post: {slug}</div>
+            }
+        TYPE
+          {params: Promise<{ slug: string }>}
+        
+        GOOD TO KNOW
+          Params = promise, must use async-await
+
+      useParams()
+        Client component hook that provides the dynamic segment from a URL.
+
+        EXAMPLE
+          'use client'
+          import { useParams } from 'next/navigation'
+          export default function ExampleClientComponent() {
+            const params = useParams()
+            console.log(params)
+            return '...'
+          }
+
+    6)ROUTE GROUPS[19/04/25]
+      Route Group to prevent the folder from being included in the route's URL path. 
+
+      CONVENTION  
+        (folderName)
+
+      EXAMPLE
+        (auth) folder       -> route group:url not affected
+          login(folder)     -> /login route
+            page.tsx        
+          register(folder)  -> /register route
+            page.tsx        
+        (dashboard)         -> route group: url not affected
+          about(folder)     -> /about route
+            page.tsx        
+          contact(folder)   -> /contact route
+            page.tsx
+        /root directory     -> / route
+          page.tsx          
+
+      BENEFIT        
+        Organize your route segments and project files into logical groups without affecting the URL path structure.
+    
     3)ERROR HANDLING
       Divided into two categories
         1)expected errors
@@ -654,64 +725,6 @@
         tbd...
       
     5)REDIRECTING
-
-    6)ROUTE GROUPS
-      Route Group to prevent the folder from being included in the route's URL path. 
-
-      EXAMPLE
-          jsm.com/users -> URL
-          (dashboard) folder
-            users folder
-
-      BENEFIT        
-        Organize your route segments and project files into logical groups without affecting the URL path structure.
-      
-      CONVENTION  
-        (folderName)
-  
-    7)DYNAMIC ROUTES
-      Route where part of the URL changes based on dynamic data(segment). 
-
-      CREATING DYNAMIC SEGMENT
-        Wrapping folder name in brackets []
-
-      EXAMPLE
-        /dashboard/users/userId
-          /userId(dynamic segment)  
-          [userId](folder)
-          page.tsx(userId dynamic page)
-
-      PARAMS
-        Dynamic Segments from dynamic routes
-
-        PLACES WHERE PARAMS ARE PASSED:
-          1)layout
-          2)page
-          3)route
-          4)generateMetadata functions.
-
-        USING PARAMS TO ACCESS DYNAMIC DATA IN SERVER COMPONENTS
-          export default async function Page({params}) {
-            const { slug } = await params
-            return <div>My Post: {slug}</div>
-          }
-        TYPE
-          {params: Promise<{ slug: string }>}
-        
-        GOOD TO KNOW
-          Params = promise, must use async-await
-
-      useParams()
-        Client component hook that provides the dynamic segment from a URL.
-
-        EXAMPLE
-          'use client'
-          import { useParams } from 'next/navigation'
-          export default function ExampleClientComponent() {
-            const params = useParams()
-            console.log(params)
-            return '...'
-          }
     8)PARALLEL ROUTES
     9)INTERCEPTING ROUTES
     10)ROUTE HANDLERS(Creating Traditional APIs in Next.js) [dt:08/04/25]
@@ -793,27 +806,28 @@
 
   2)RENDERING [dt:07/04/25]
     Convertion of written code into UI.
+    Execution of js code into html
 
-    REACT VS NEXT DIFFERENCE
-      REACT
-        Everything in the client
-      NEXT
-        Allows to combine client & server rendering
-
-    FUNDAMENTALS
+    0)FUNDAMENTALS
+      0)THE TIME
+        1)BUILD TIME (compile)
+          prepare app code for compilation, bundling, optimization -> npm run dev
+        2)RUN TIME
+          compiled app is actively executing and running, utilizing system resources 
       1)environment
-        where application is executed
-          1)client
-            Browser in users machine that:
-              1)sends requests to server
-              2)executes response from server to display the UI.
-          2)server
-            Computer in data center that:
-              1)stores application code
-              2)receives request from a client
-              3)sends response to client
+        where application is executed, providing services, components. 
+      
+        1)client
+          Browser in users machine that:
+            1)sends requests to server
+            2)executes response from server to display the UI.
+        2)server
+          Computer in data center that:
+            1)stores application code
+            2)receives request from a client
+            3)sends response to client
         WHY
-          Several operations are more suited to one environment than another.\
+          Several operations are more suited to one environment than another.
 
       2)request-response lifecycle
         Initiated when user interacts with application
@@ -843,50 +857,130 @@
           "use client"
           "use server"
 
-    CLIENT SIDE RENDERING
-      ....
+    1)CLIENT VS SERVER COMPONENTS
+      0)REACT VS NEXT DIFFERENCE
+        REACT
+          Everything in the client
+        NEXT
+          Allows to combine client & server rendering
+
+          Next js 12<
+            SSR rendering limited only to pages
+
+          Next js 13>
+            SSR rendering component level opening client vs server component paradirm
+
+      1)CLIENT COMPONENT
+        Pre-rendered on server creating static shell, finishing rendering on client with hydration on the things requiring
+          1)interactivity
+          2)browser  
+
+        HOW  
+          Interactivity elements are left as placeholders during PRE SERVER SIDE RENDERING. 
+
+        SYNTAX
+          "use client" at the top of the component file.
+
+        WHEN TO USE
+          1)interactivity
+            1)click button
+            2)input and forms
+            3)triggering events
+          2)react hooks
+          3)browser only apis
+          4)custom hooks
+          5)react class components
+
+        ANALOGY 
+          Entire LEGO set dumped on desk at once to build
+        PROBLEM
+          performance affected, b/c this process it too reliant on users internet and device.
+
+      2)SERVER COMPONENT
+        WHAT
+          Rendered on the server.
+        HOW
+          Executed and resolved into HTML on the server and sent to the client to display.
+
+          WHEN IS IT EXECUTED
+            Static Side Rendering
+              Build time
+            Dynamic Side Rendering
+              Request time
+
+        WHEN TO USE
+          1)access server side resources directly or db
+          2)fetch data
+          3)static content
+          4)server side computation
+          5)large dependencies
+          6)sensitive api information
+
+        Effect
+          1)faster and improved performance
+
+        SYNTAX
+          By default, components in next.js are server components, unless otherwise specified.
+
+        ANALOGY
+          STATIC
+            entire LEGO set build on server and brought already built to the client
+          DYNAMIC
+            static shell built entirely ONLY dynamic pieces left to build in the client
+
+    2)CLIENT SIDE RENDERING
+      Same as the definition of the client component
     
-    SERVER SIDE RENDERING
+    3)SERVER SIDE RENDERING
       Write UI that can be RENDERED and CACHED on the server
 
       HOW TO USE
         By default, all components are server components unless otherwise specified, and server components use server side rendering
 
       WHY RENDER ON SERVER
-        1)improve performance
-          Reducing time to complete request b/c of closeness of data source
-        1)improved Initial Load Time(ILT)
-        2)Reduced FCP(FIrst Contentful Paint
-        3)Better SEO
-          As content is already in HTML format
-        4)Logic Simplified
+        1)improve performance on request
+          Reducing time to complete b/c of closeness of data source
+        2)js bundle is reduced, html is ready improving:
+          1)Reduce Initial Load Time(ILT)
+          2)Reduced FCP(FIrst Contentful Paint
+          3)Better SEO
+        3)Logic Simplified
           No need for client hooks
-        5)Automatic Request Deduplication
+        4)Automatic Request Deduplication
           Reduce unnecessary API calls by analyzing identical requests and eliminating all but 1.
-        6)Improved Security
+        5)Improved Security
           Protect tokens and API keys
-        7)Reduced Network Waterfall
+        6)Reduced Network Waterfall
           Requests are more parallelized instead of waterfalled in the server.
         
-      SERVER RENDERING STRATEGIES
-        1)Static Rendering(default) 
+      SERVER RENDERING STRATEGIES(different ways to display)
+        1)Static Site Generation(default) 
           HTML pages generated at build time when deploying site NOT when user requests it.
 
-          WHEN
+          WHEN(runtime/build time)
             1)Static(as the name suggests) pages
             2)unchanging not dynamic data on page
 
           EXAMPLE
             1)static blog post
             2)product page
+
+          UPDATE
+            Required rebuilding ENTIRE site
           
         2)Dynamic Rendering
           HTML pages genearted for each user at request time
 
-          WHEN
+          WHEN RUNS(runtime/build time)
+            request time
+          
+          WHEN USE
             1)Data personalized to the user
             2)Contains information from a dynamic API
-          
+            3)authentication
+            4)real time chat platforms
+            5)video streaming services
+        
           DYNAMIC API
             Information only known at request time and not ahead of time during pre rendering
 
@@ -911,7 +1005,13 @@
             loading + React Suspense(other section)
 
         4)ISG(Incremental Static Regeneration)
-          Allows update of static content after site build
+          Allows update of static content from SSG after site build WITHOUT rebuilding ENTIRE page
+
+          BUILD TIME
+            most static
+
+          RUNTIME
+            dynamic content when needed
 
           METHODS TO USE
             1)time based revalidation
@@ -956,10 +1056,9 @@
             2)dynamic
             3)partially static & dynamic
 
-    1)CLIENT COMPONENTS
-    2)COMPOSITION PATTERNS
-    3)PARTIAL PRERENDERING
-    4)RUNTIMES
+    1)COMPOSITION PATTERNS
+    2)PARTIAL PRERENDERING
+    3)RUNTIMES
 
 	3)SEO & METADATA [dt:08/04/25]
     Using metadata to improve SEO
@@ -1122,6 +1221,12 @@
         example
           import profilePic from './me.png'
           src={profilePic}
+
+        src
+          /images/image
+
+          Next sends a request to /images/photo.jpg, does not matter if component is 10 levels deep in the file tree.
+
         
         props
           width, height, blurDataURL
@@ -1530,8 +1635,8 @@
       1)Uninstall Tailwind v4
         npm uninstall tailwindcss @tailwindcss/postcss @tailwindcss/node
 
-      2.1)Install Tailwind CSS v3.4
-        npm install -D tailwindcss@3.4.1 postcss autoprefixer
+      2.1)Install Tailwind CSS v3
+        npm install -D tailwindcss@^3 postcss autoprefixer
 
       2.2)Then reinit Tailwind(this creates tailwind config file)
         npx tailwindcss init -p 
@@ -1747,21 +1852,189 @@
       1)images
       2)logos
       3)icons
-    
-    
-      
-6)NEXTJS ROUTING
+
+    How to hide files and folder from appearing in vs code
+      settings.json
+        "files.exclude": {
+          "**/.vscode": true,
+          "**/.next": true,
+          "**/node_modules": true,
+          "next-env.d.ts": true
+        }
+6)NEXTJS ROUTING[19/04/25]
 	FILE BASED
+    repeat vid...
 	ADVANCED
-7)ARCHITECTURE
-	BIRTH OF SERVER COMPONENTS
+    repeat vid...
+7)ARCHITECTURE[19/04/25]
+	BIRTH OF SERVER COMPONENT
+    repeat vid...
 	CLIENT VS SERVER PARADIGM
+    repeat vid...
 	DIFFERENT RENDERING STRATEGIES
-7)LIGHT AND DARK THEME
-	SET UP THE THEME
-	INSTALLING CHADCN UI 
+    repeat vid...
+8)LIGHT AND DARK THEME [21:04:25]
+
+	NEXT-THEMES PACKAGE
+    Library makes it easy to manage light/dark system themes in a nextjs app. 
+
+    WHY
+      1)dark/light toggle
+      2)respect the system preference
+      
+  HOW TO USE
+    INSTALL
+      npm i next-themes    
+
+    CREATE THEME PROVIDER
+      "use client"
+
+      import { ThemeProviderProps } from 'next-themes'
+      import { ThemeProvider as NextThemeProvider } from 'next-themes'
+      import React from 'react'
+
+      const ThemeProvider = ({children, ...props}: ThemeProviderProps) => {
+        return (
+          <NextThemeProvider {...props}>{children}</NextThemeProvider>
+        )
+      }
+
+      export default ThemeProvider
+
+    WRAP APP AROUND PROVIDER
+      import ThemeProvider from "../../context/Theme";
+
+      <ThemeProvider
+        attribute="class"
+        defaultTheme="system"
+        enableSystem
+        disableTransitionOnChange
+      >
+        {children}
+      </ThemeProvider>
+
+      WHAT DOES
+        theme: current theme (e.g. "light", "dark", or "system")
+        setTheme(theme): a function to switch themes
+        resolvedTheme: what theme is actually being used (light/dark), even if theme is set to system
+        and other helpers like themes and systemTheme
+
+  REQUIRENT FOR THIS TO WORK
+    darkMode: 'class', // 
+      Tells tailwind: “Only apply dark mode styles when there’s a class="dark" on a parent element — usually the <html> tag.”
+
+  PROPS
+    1)attribute="class"
+      The ThemeProvider injects a class or data attribute into the DOM for you, depending on how you configured it:
+        1)If attribute="class" → adds class="dark" or class="light" to the <html> tag.
+        2)If attribute="data-theme" → adds data-theme="dark" or data-theme="light".
+      
+      ABSTRACTION
+        This happens automatically whenever the theme is toggled.
+        You don’t need to touch document.documentElement.classList.add() or anything like that.
+
+      WHY
+        tailwind expects a dark class to be toggled on the html.
+        EXAMPLE
+          darkMode: "class" / <html class="dark">
+  
+    2)defaultTheme="system"
+      set initial theme to match user preference 
+    3)enableSystem
+      enable auto theme switching when user system theme changes allowing to:1)switch in ls, 2)auto respond to system theme changes
+
+      ABSTRACTION
+        next-themes uses the window.matchMedia('(prefers-color-scheme: dark') API behind the scenes to detect whether the user's OS is in dark or light mode.
+
+        It will:
+          Apply the correct theme initially
+          Listen for changes to system preferences and update the theme reactively
+
+    4)disableTransitionOnChange
+      prevents weird flickers when switching between themes, temporarilly disables all css transitions when switching themes.
+    
+  CHANDN PACKAGE
+    Collection of beautifully designed UI components built with tailwind CSS
+    
+    DIFFERENCE WITH MUI / CHAKRA
+      not a copy paste, you own code and customize it
+
+    WHY
+      customizable
+        no more fightning the library style
+      tailwind first
+        build with tailwind in mind
+      headless logic
+        raix ui under the hood
+      prebuilt components
+        modals, tooltips,toasts,dropdowns,themes
+      built in support for dark/light theme
+        already setup with tailwinds darkmode: class setup
+    
+    RUN
+      npx shadcn-ui@latest/version(2.3.0 for tailwind v3) init -> will force the install
+
+      WHAT HAPPENS
+        1)components.json created
+          Includes shadcn configurations
+        2)updates tailwind.config.mjs
+          darkMode: ["class"]
+        4)updates src/aapp/globals.css
+        5)installs deps
+        6)created lib/utils.ts file
+          Helper to manage class conditions without using helper strings
+        
+
+    ADD DROPDOWN
+      install
+        npx shadcn@latest add dropdown-menu
+
+      WHAT HAPPENS
+        Every component is added to the components/ui folder
+      
+      import and use
+        import {
+          DropdownMenu,
+          DropdownMenuContent,
+          DropdownMenuItem,
+          DropdownMenuLabel,
+          DropdownMenuSeparator,
+          DropdownMenuTrigger,
+        } from "@/components/ui/dropdown-menu";
+
+        <DropdownMenu>
+          <DropdownMenuTrigger>Open</DropdownMenuTrigger>
+          <DropdownMenuContent>
+            <DropdownMenuLabel>My Account</DropdownMenuLabel>
+            <DropdownMenuSeparator />
+            <DropdownMenuItem>Profile</DropdownMenuItem>
+            <DropdownMenuItem>Billing</DropdownMenuItem>
+            <DropdownMenuItem>Team</DropdownMenuItem>
+            <DropdownMenuItem>Subscription</DropdownMenuItem>
+          </DropdownMenuContent>
+        </DropdownMenu>
+
 	CREATING A NAVBAR
+    navigation/navbar
+      index.tsx -> entire navbar
+        
 	CREATE A THEME TOGGLER
+    navigation/navbar
+      Theme.tsx
+        1)copy code drom shadcn toggler
+        2)install necessary components(button)
+        3)import on navbar component
+
+    LOGIC
+      1)import from next themese
+        import { useTheme } from "next-themes"; -> next-themes function that controls the theme
+      2)use from next themes
+        const { setTheme } = useTheme();
+      3)action with the shadcn component on the logic from next-themes
+        <DropdownMenuItem onClick={() => setTheme("light")}>
+          Light
+        </DropdownMenuItem>
+
 8)AUTHENTICATION
 	WHAT
 	HTTP STATE MANAGEMENT MECHANISMS
